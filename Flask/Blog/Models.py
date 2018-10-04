@@ -1,6 +1,13 @@
 from Blog import db
 from datetime import datetime
 from flask_login import UserMixin
+from Blog import db, login_manager
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    print('load_user')
+    return  User.query.get(int(user_id))
 
 
 class User(db.Model, UserMixin):

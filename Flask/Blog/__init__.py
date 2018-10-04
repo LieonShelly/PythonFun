@@ -12,5 +12,4 @@ login_manager = LoginManager(app)
 login_manager.login_manager = 'login'
 login_manager.login_message_category = 'info'
 
-
 from Blog import routes
