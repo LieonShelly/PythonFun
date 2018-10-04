@@ -1,8 +1,8 @@
 from flask import Flask, render_template, Response, redirect, flash, url_for, request
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required, logout_user
 from Blog.Forms import RegistrationForm, LoginForm
 from Blog.Models import User
-from Blog import app
+from Blog import app, bcrypt, db
 
 @app.route('/')
 @app.route('/home')
@@ -20,28 +20,31 @@ def register():
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_passwor = bcrypt.generate_password_hash(form.password.data).decode('urf-8')
+        hashed_passwor = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email = form.email.data, password=hashed_passwor)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for='login')
+        return redirect(url_for('login'))
     return render_template('register.html', title="register", form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-#     if current_user.is_authenticated:
-#         return redirect('home')
+    if current_user.is_authenticated:
+        return redirect('home')
     form = LoginForm()
-#     if form.validate_on_submit():
-#         user = User.query.fliter_by(email=form.email.data).first()
-#         if user and bcrypt.check_password_hash(user.password, form.password.data):
-#             login_user(user, remember=form.remember.data)
-#             next_page = request.args.get('next')
-#             return redirect(next_page) if next_page else redirect(url_for('home'))
-#         else:
-#             flash('Login Unsuccessful. Please check email and password', 'danger')
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
+        else:
+            flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title="login", form=form)
 
-
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
