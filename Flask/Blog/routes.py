@@ -4,13 +4,15 @@ from Blog.Forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from Blog.Models import User, Posts
 from Blog import app, bcrypt, db
 import secrets
-import os
+import os, json
 from PIL import Image
 
 @app.route('/')
 @app.route('/home')
 def home():
-    posts = Posts.query.all()
+    path = os.path.join(app.root_path, 'posts.json')
+    page = request.args.get('page', 1, type=int)
+    posts = Posts.query.order_by(Posts.date_posted.desc()).paginate(page=page, per_page=5)
     return render_template('home.html', posts=posts)
 
 @app.route('/about')
@@ -129,3 +131,14 @@ def update_post(post_id):
         form.title.data = post.title
         form.content.data = post.content
     return render_template('create_post.html', title = 'Update Post', form = form, legend = 'Update Post')
+
+@app.route("/user/<string:username>")
+def user_posts(username):
+    print('----------')
+    page = request.args.get('page', 1, type=int)
+    print('----------')
+    user = User.query.filter_by(username=username).first_or_404()
+    print('----------')
+    posts = Posts.query.filter_by(author=user).order_by(Posts.date_posted.desc()).paginate(page = page, per_page = 5)
+    print('----------')
+    return render_template('user_posts.html', posts=posts, user=user)
