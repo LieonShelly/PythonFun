@@ -22,12 +22,14 @@ def create_app(config_class = Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
-    
+
     from Blog.user.routes import user
     from Blog.post.routes import post
     from Blog.main.routes import main
+    from Blog.errors.handlers import errors
     app.register_blueprint(user)
     app.register_blueprint(post)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
 
     return app
