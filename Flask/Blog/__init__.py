@@ -6,7 +6,7 @@ import json
 import os
 from flask_mail import Mail
 from Blog.config import Config
-
+import pymysql
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -18,8 +18,8 @@ mail = Mail()
 def create_app(config_class = Config):
     app = Flask(__name__)
     app.config.from_object(Config)
+    pymysql.install_as_MySQLdb()
     db.init_app(app)
-    db.create_all()
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
@@ -28,9 +28,12 @@ def create_app(config_class = Config):
     from Blog.post.routes import post
     from Blog.main.routes import main
     from Blog.errors.handlers import errors
+    from Blog.create_db.routes import cretedb
+
     app.register_blueprint(user)
     app.register_blueprint(post)
     app.register_blueprint(main)
     app.register_blueprint(errors)
+    app.register_blueprint(cretedb)
 
     return app
