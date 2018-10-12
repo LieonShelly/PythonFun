@@ -1,11 +1,7 @@
 
 runtime: python37
-
-handlers:
-- url: /static
-  static_dir: Blog/static
-- url: /.*
-  script: auto
+env: flex
+entrypoint: gunicorn -b :$PORT run:app
 
 env_variables:
   CLOUDSQL_CONNECTION_NAME: pythonfun-219016:us-central1:pythonmysql
