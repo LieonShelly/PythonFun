@@ -5,7 +5,10 @@ handlers:
   # This configures Google App Engine to serve the files in the app's static
   # directory.
 - url: /
-  script: run.app
+  script: Blog/main/routes.app
+
+- url: /home
+  script: Blog/main/routes.app
 
   # This handler routes all requests not caught above to your main app. It is
   # required when static routes are defined, but can be omitted (along with
