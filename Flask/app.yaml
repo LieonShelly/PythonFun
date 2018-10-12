@@ -13,10 +13,10 @@ handlers:
 - url: /.*
   script: auto
 
-  env_variables:
-    CLOUDSQL_CONNECTION_NAME: pythonfun-219016:us-central1:pythonmysql
-    CLOUDSQL_USER: root
-    CLOUDSQL_PASSWORD: lieon1992316
+env_variables:
+  CLOUDSQL_CONNECTION_NAME: pythonfun-219016:us-central1:pythonmysql
+  CLOUDSQL_USER: root
+  CLOUDSQL_PASSWORD: lieon1992316
 
 libraries:
 - name: MySQLdb
