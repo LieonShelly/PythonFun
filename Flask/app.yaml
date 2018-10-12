@@ -19,5 +19,5 @@ env_variables:
   CLOUDSQL_PASSWORD: lieon1992316
 
 libraries:
-- name: MySQLdb
+- name: pymsql
   version: "latest"
