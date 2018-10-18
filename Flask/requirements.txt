@@ -9,3 +9,5 @@ flask_bcrypt
 Pillow
 requests
 pymysql
+gunicorn
+gevent
