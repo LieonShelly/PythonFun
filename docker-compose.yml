@@ -1,0 +1,29 @@
+version: '3'
+
+services: 
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD="123456"
+    volumes:
+      - /Users/lieon/Desktop/DockerDatabase/Mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  web:
+    build: ./Flask
+    depends_on:
+      - db
+    links:
+      - db:db4
+    command: gunicorn -c gunicorn.py run:app
+    ports:
+      - "5000:5000"
+  
+  nginx:
+    build: ./nginx
+    depends_on:
+      - web
+    command: nginx -g 'daemon off;'
+    ports:
+      - "80:80"
