@@ -8,7 +8,9 @@ services:
     volumes:
       - /root/Data/:/var/lib/mysql
     ports:
-      - 3306:3306
+      - "3306:3306"
+    expose:
+      - "3306"
 
   web:
     build: ./Flask
@@ -24,6 +26,8 @@ services:
     command: gunicorn -c gunicorn.py run:app
     ports:
       - "5000:5000"
+    expose:
+      - "5000"
   
   nginx:
     build: ./nginx
