@@ -1,12 +1,14 @@
 version: '3'
 
 services: 
-  db:
+  mysql:
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD="123456"
     volumes:
       - /root/Data/:/var/lib/mysql
+    networks: 
+      - my-bridge
     ports:
       - 3306:3306
 
@@ -18,10 +20,12 @@ services:
       - db
       - db:db4
     environment:
-      - DB4_PORT_3306_TCP_ADDR="172.19.0.2"
+      DB4_PORT_3306_TCP_ADDR:mysql
       - DB4_PORT_3306_TCP_PORT=3306
       - DB4_ENV_MYSQL_ROOT_PASSWORD="123456"
     command: gunicorn -c gunicorn.py run:app
+    networks:
+      - my-bridge
     ports:
       - "5000:5000"
   
@@ -32,3 +36,6 @@ services:
     command: nginx -g 'daemon off;'
     ports:
       - "80:80"
+  networks: 
+    my-bridge:
+      driver: bridge
