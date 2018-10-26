@@ -18,7 +18,7 @@ services:
       - mysql
       - mysql:db4
     environment:
-        DB4_PORT_3306_TCP_ADDR:mysql
+      - DB4_PORT_3306_TCP_ADDR=mysql
       - DB4_PORT_3306_TCP_PORT=3306
       - DB4_ENV_MYSQL_ROOT_PASSWORD="123456"
     command: gunicorn -c gunicorn.py run:app
