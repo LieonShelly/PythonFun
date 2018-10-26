@@ -9,7 +9,7 @@ services:
        MYSQL_USER: "root"
        MYSQL_PASSWORD: "123456"
     volumes:
-      - /Users/lieon/Desktop/DockerDatabase/Mysql:/var/lib/mysql
+      - /root/Data:/var/lib/mysql
     ports:
       - "3306:3306"
     expose:
