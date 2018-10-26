@@ -15,6 +15,7 @@ services:
     depends_on:
       - db
     links:
+      - db
       - db:db4
     command: gunicorn -c gunicorn.py run:app
     ports:
