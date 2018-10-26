@@ -15,12 +15,12 @@ services:
   web:
     build: ./Flask
     depends_on:
-      - db
+      - mysql
     links:
-      - db
-      - db:db4
+      - mysql
+      - mysql:db4
     environment:
-      DB4_PORT_3306_TCP_ADDR:mysql
+      - DB4_PORT_3306_TCP_ADDR:mysql
       - DB4_PORT_3306_TCP_PORT=3306
       - DB4_ENV_MYSQL_ROOT_PASSWORD="123456"
     command: gunicorn -c gunicorn.py run:app
@@ -36,6 +36,6 @@ services:
     command: nginx -g 'daemon off;'
     ports:
       - "80:80"
-  networks: 
-    my-bridge:
-      driver: bridge
+networks: 
+  my-bridge:
+    driver: bridge
