@@ -1,6 +1,9 @@
 FROM  nginx:latest
 ADD default.conf /etc/nginx/conf.d/default.conf
-ADD . /nginx
-WORKDIR /nginx
+RUN mkdir -p /var/www/media
+WORKDIR /var/www/media
+ADD 1_www.lieoncx.cn_bundle.crt /var/www/media/1_www.lieoncx.cn_bundle.crt
+ADD 2_www.lieoncx.cn.key /var/www/media/2_www.lieoncx.cn.key
+RUN chown -R nginx:nginx /var/www/media
 
 
