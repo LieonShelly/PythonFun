@@ -8,8 +8,8 @@ services:
        MYSQL_DATABASE: "blog"
        MYSQL_USER: "root"
        MYSQL_PASSWORD: "123456"
-    # volumes:
-    #   - /root/Data:/var/lib/mysql
+    volumes:
+      - /root/Data:/var/lib/mysql
     ports:
       - "3306:3306"
     expose:
