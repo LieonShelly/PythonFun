@@ -5,5 +5,6 @@ WORKDIR /var/www/media
 ADD lieoncx.cn.crt /var/www/media/
 ADD lieoncx.cn.key /var/www/media/
 RUN chown -R nginx:nginx /var/www/media
+RUN service nginx restart
 
 
