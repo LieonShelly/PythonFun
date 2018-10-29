@@ -32,7 +32,7 @@ services:
     depends_on:
       - web
     links:
-      - web:web
+      - web
     command: nginx -g 'daemon off;'
     ports:
       - "80:80"
