@@ -22,6 +22,8 @@ services:
     links:
       - mysql
     command: gunicorn -c gunicorn.py run:app
+    # volumes:
+    #   - /Users/lieon/Desktop/DockerDatabase/Mysql:/Blog
     ports:
       - "5000:5000"
     expose:
@@ -35,4 +37,4 @@ services:
       - web
     command: nginx -g 'daemon off;'
     ports:
-      - "80:80"
+      - "443:443"
