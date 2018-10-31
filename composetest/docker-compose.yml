@@ -1,9 +1,0 @@
-version: '3'
-services:
-  web:
-    build: .
-    command: gunicorn -c gunicorn.py app:app
-    ports:
-     - "5000:5000"
-  redis:
-    image: "redis:alpine"

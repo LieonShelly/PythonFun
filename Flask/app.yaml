@@ -1,9 +1,0 @@
-
-runtime: python37
-env: flex
-entrypoint: gunicorn -b :$PORT run:app
-
-env_variables:
-  CLOUDSQL_CONNECTION_NAME: pythonfun-219016:us-central1:pythonmysql
-  CLOUDSQL_USER: root
-  CLOUDSQL_PASSWORD: lieon1992316
