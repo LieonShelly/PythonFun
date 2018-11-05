@@ -10,7 +10,8 @@ class Getter():
 
 
     def isOverThreshold(self):
-        if self.redis.count >= POOL_UPPER_THRESHOLD:
+        print(type(self.redis.count))
+        if self.redis.count() > POOL_UPPER_THRESHOLD:
             return True
         else:
             return False
@@ -18,7 +19,9 @@ class Getter():
     def run(self):
         if not self.isOverThreshold():
             for callbackLabel in range(self.crawler.__CrawlFuncCount__):
-                callback = self.crawler__CrwaFunc__[callbackLabel]
+                print('*****', callbackLabel)
+                callback = self.crawler.__CrawlFunc__[callbackLabel]
+
                 proxies = self.crawler.getProxies(callback)
                 sys.stdout.flush()
                 for proxy in proxies:

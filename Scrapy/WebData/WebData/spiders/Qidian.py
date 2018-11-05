@@ -13,7 +13,7 @@ class QidianSpider(Spider):
     def start_requests(self):
         # yield Request("https://read.qidian.com/chapter/8s7RmxQkntY3LbtcZNMchg2/fn_NgkMI2962uJcMpdsVgA2",callback=self.parseChapterContent)
         data = {"page": 1}
-        maxPage = 100
+        maxPage = 1
         baseURL = "https://www.qidian.com/free/all?"
         for page in range(1, maxPage + 1):
             data["page"] = page

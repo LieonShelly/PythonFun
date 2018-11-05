@@ -47,7 +47,7 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
-   'WebData.middlewares.ProxyMiddwareProxyMiddware': 543,
+   'WebData.middlewares.ProxyMiddware': 543,
 #    'WebData.middlewares.WebdataSpiderMiddleware': 543,
    
 }
@@ -98,4 +98,4 @@ MysqlPort = "3306"
 MysqlPassword = "lieon1992316"
 MongoUri = "mongodb://mongo:27017/"
 MongoDB = "qidian"
-ProxyURL = "ProxyURL"
+ProxyURL = "http://127.0.0.1:5555/random"

@@ -17,7 +17,7 @@ class Scheduler():
     def scheduleGetter(self, cycle=GETTER_CYCLE):
         getter = Getter()
         while True:
-            print('Tester is running')
+            print('Getter is running')
             getter.run()
             time.sleep(cycle)
     
@@ -27,14 +27,11 @@ class Scheduler():
     def run(self):
         print('Proxy is running')
         if TESTER_ENABLED:
-            print('Proxy is running')
             testerProcess = Process(target=self.scheduleTester)
             testerProcess.start()
         if GETTER_ENABLED:
-            print('Proxy is running')
             testerProcess = Process(target=self.scheduleGetter)
             testerProcess.start()
         if API_ENABLED:
-            print('Proxy is running')
             testerProcess = Process(target=self.schduleApi)
             testerProcess.start()
