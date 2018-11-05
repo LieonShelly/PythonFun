@@ -46,11 +46,9 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-SPIDER_MIDDLEWARES = {
-   'WebData.middlewares.ProxyMiddwareProxyMiddware': 543,
+#SPIDER_MIDDLEWARES = {
 #    'WebData.middlewares.WebdataSpiderMiddleware': 543,
-   
-}
+#}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
@@ -66,9 +64,9 @@ SPIDER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   "WebData.pipelines.MongoPipeline": 301
-}
+#ITEM_PIPELINES = {
+#    'WebData.pipelines.WebdataPipeline': 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -91,11 +89,4 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MysqlHost = "localhost"
-MysqlDatabase = "qidian"
-MysqlUser = "root"
-MysqlPort = "3306"
-MysqlPassword = "lieon1992316"
-MongoUri = "mongodb://mongo:27017/"
-MongoDB = "qidian"
-ProxyURL = "ProxyURL"
+ProxyURL = 'localhost:5000'
