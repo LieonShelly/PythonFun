@@ -10,6 +10,11 @@ def load_user(user_id):
     print('load_user')
     return  User.query.get(int(user_id))
 
+class Roles(db.Model):
+     __tablename__="roles"
+     id = db.Column(db.Integer, primary_key=True)
+     users = db.relationship('User', backref="role")
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +23,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Posts', backref='author', lazy=True)
+    roleId = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
     def get_rest_token(self, expires_sec=1800):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expires_sec)
