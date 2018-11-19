@@ -24,19 +24,22 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
 
-    def __init__(self, **kwargs):
-        super(Role, self.__init__(**kwargs)
-        if self.permisions is None:
-            self.permisions = 0
+    # def __init__(self, **kwargs):
+    #     super(Role, self.__init__(**kwargs)
+    #     if self.role is None:
+    #         if self.email == current_app.config['FLASKY_ADMIN']:
+    #             self.role = Role.query.filter_by(name='Administrator').first()
+    #         if self.role is None:
+    #             self.role = Role.query.filter_by(defailt=True).first()
 
     def __repr__(self):
-        return '<User %r>' % self.email
+        return '<User %r>' % self.username
 
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
     
-    @property.setter
+    @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
     
@@ -53,7 +56,7 @@ class User(db.Model):
             data = s.loads(token.encode('utf-8'))
         except:
             return False
-        if data.get('confirm') ! = self.id:
+        if data.get('confirm') != self.id:
             return False
         self.confirmed = True
         db.session.add(self)
@@ -63,7 +66,7 @@ class Role(db.Model):
     __tablename__='roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    defalt = db.Column(db.Boolean, defalt=False, index=True)
+    defalt = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
 

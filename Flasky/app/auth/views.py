@@ -1,11 +1,11 @@
 from . import auth
 from flask import render_template
-from auth.models import User
-from auth.forms import LoginForm, RegistrationForm
+from .models import User
+from .forms import LoginForm, RegistrationForm
 from flask_login import login_user, current_user, login_required
 from flask import request, url_for, flash, redirect
 from app import db
-from email import send_email
+from .email import send_email
 
 @auth.before_app_request
 def before_request():
@@ -43,7 +43,8 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(email=form.email.data,
-                    username=form.password.data)
+                    username=form.username.data,
+                    password=form.password.data)
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()
@@ -71,3 +72,4 @@ def resend_confirmation():
     'auth/email/confirm', user=current_user, token=token)
     flash('A new confirmation email has ben send to you by email.')
     return redirect(url_for('main.index'))
+

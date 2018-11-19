@@ -4,7 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import config
 import os
-
+from flask_migrate import Migrate
+ 
 mail = Mail()
 db = SQLAlchemy()
 loginManager = LoginManager()
@@ -23,4 +24,6 @@ def create_app(config_name='default'):
 
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+
+    migrate = Migrate(app, db)
     return app
