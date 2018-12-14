@@ -1,9 +1,7 @@
-import os
-from app import create_app, db
-from auth.models import User, Role
+from app import create_app
 
 app = create_app()
 
-@app.shell_context_processor
-def make_shell_context():
-    return dict(db=db, User=User, Role=Role)
+if __name__ == '__main__':
+	print('====')
+	app.run(host='localhost', debug=True)

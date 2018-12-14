@@ -1,6 +1,6 @@
 flask
-flask_moment
-flask_login
-flask_sqlalchemy
-flask_migrate
 werkzeug
+Flask-PyMongo
+Scrapy
+requests
+gevent
