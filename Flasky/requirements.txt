@@ -4,3 +4,4 @@ Flask-PyMongo
 Scrapy
 requests
 gevent
+flask-uploads

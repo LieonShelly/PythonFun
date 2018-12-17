@@ -17,6 +17,8 @@ class Config:
     JWT_SECRET_KEY = "asdfasdfasdasd23231"
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=0.5)
     JWT_HEADER_TYPE=None
+    UPLOADED_FILES_DEST = os.path.join(os.path.dirname(os.path.abspath(__file__)) + os.sep + 'picture')
+    UPLOADS_DEFAULT_DEST = os.path.join(os.path.dirname(os.path.abspath(__file__)) + os.sep + 'picture')
 
     @staticmethod
     def initApp(app):
