@@ -125,8 +125,8 @@ class ProxyMiddleWare(object):
             return False
 
     def process_request(self, request, spider):
-         # proxy = self.get_random_proxy()
-         proxy = '110.167.30.50:8060'
+         proxy = self.get_random_proxy()
+         # proxy = '110.167.30.50:8060'
          spider.logger.info('Using proxy: %s' % proxy)
          if proxy:
              uri = "http://{proxy}".format(proxy=proxy)
@@ -161,7 +161,7 @@ class SeleniumMiddleWare(object):
             self.logger.debug("Chrome is Starting")
             try:
                 self.browser.get(request.url)
-                load_a = self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'foot-contact')))
+                load_a = self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'linknav')))
                 return HtmlResponse(url=request.url, body=self.browser.page_source, request=request, encoding='utf-8',
                                     status=200)
             except TimeoutException:

@@ -13,6 +13,7 @@ class CarlistSpider(scrapy.Spider):
     serial_url = "http://api.car.bitauto.com/CarInfo/GetCarDataJson.ashx?action=serial&pid={pid}&datatype=1"
     serial_detail_url = "http://car.m.yiche.com/{Allspell}"
 
+
     def parse(self, response):
         lists = response.css(".brand-list")
         for list in lists:

@@ -33,3 +33,8 @@ class CarSeialChildDetail(Item):
     yearCarList = Field()
     # 2.0升/149kW 涡轮增压
     configName = Field()
+
+class NewCar(Item):
+    brand_name = Field()
+    serials = Field()
+
