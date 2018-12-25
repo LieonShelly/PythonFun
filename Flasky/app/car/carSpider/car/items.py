@@ -38,3 +38,7 @@ class NewCar(Item):
     brand_name = Field()
     serials = Field()
 
+class NewCarSerialDetail(Item):
+    car_serial_id = Field()
+    car_lists = Field()
+

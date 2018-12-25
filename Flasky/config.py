@@ -19,6 +19,11 @@ class Config:
     JWT_HEADER_TYPE=None
     UPLOADED_FILES_DEST = os.path.join(os.path.dirname(os.path.abspath(__file__)) + os.sep + 'picture')
     UPLOADS_DEFAULT_DEST = os.path.join(os.path.dirname(os.path.abspath(__file__)) + os.sep + 'picture')
+    MONGODB_DB = 'wanchebao'
+    MONGODB_HOST = '127.0.1'
+    MONGODB_PORT = 27017
+    # MONGODB_USERNAME = 'root'
+    # MONGODB_PASSWORD = 'lieon1992316'
 
     @staticmethod
     def initApp(app):
@@ -26,16 +31,18 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    MONGO_URI = "mongodb://localhost:27017/wanchebao"
-    MONGO_USERNAME = 'lieon',
-    MONGO_PASSWORD = 'lieon1992316',
+ 
 
 class TestingConfig(Config):
     TESTING = True
-    MONGO_URI = "mongodb://localhost:27017/wanchebao"
 
 class ProductionConfig(Config):
     MONGO_URI = "mongodb://localhost:27017/wanchebao"
+
+class CeleryConfig:
+    broker_url = 'redis://localhost:6379/2'
+    result_backend = 'redis://localhost:6379/3'
+    imports = ('app.task')
 
 config = {
     'development': DevelopmentConfig,

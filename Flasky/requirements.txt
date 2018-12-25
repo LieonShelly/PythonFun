@@ -5,3 +5,5 @@ Scrapy
 requests
 gevent
 flask-uploads
+flask-mongoengine
+apscheduler

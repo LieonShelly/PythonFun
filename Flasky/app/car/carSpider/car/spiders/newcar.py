@@ -1,25 +1,20 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from  car.items import NewCar
+from  car.items import NewCar, NewCarSerialDetail
 import json
 from urllib.parse import urlparse, parse_qs
 from scrapy import Request
+import time
 
 class NewcarSpider(scrapy.Spider):
     name = 'newcar'
     allowed_domains = ['auto.sohu.com', 'db.auto.sohu.com'] 
-    start_urls = ['http://db.auto.sohu.com/zxauto-2004/5155'] # 
-    # start_urls = ['http://db.auto.sohu.com/home/'] # http://db.auto.sohu.com/home/
+    start_urls = ['http://db.auto.sohu.com/home/'] # http://db.auto.sohu.com/home/
 
-    def start_requests(self):
-        yield Request(url='http://db.auto.sohu.com/zxauto-2004/5155',callback=self.parse, meta={"use_selenium": True})
+    # def start_requests(self):
+    #     yield Request(url='http://db.auto.sohu.com/zxauto-2004/5155',callback=self.parse, meta={"use_selenium": True})
 
     def parse(self, response):
-        tables = response.xpath('//div[@id="trm_data"]').css('.b').xpath('./table').css('.b')
-        for table in tables:
-            config_name = table.xpath('./thead/tr/th/text()').extract()[0]
-            print(config_name)
-        return
         brands = response.css('.close_child')
         for brand in brands:
             newCar = NewCar()
@@ -45,8 +40,8 @@ class NewcarSpider(scrapy.Spider):
                                 "child_searial_id": url_path
                             }
                         )
-                    print(car_url)
-                    yield Request(url=car_url,callback=self.parse_car)
+                    yield Request(url=car_url, callback=self.parse_car)
+                    time.sleep(1)
                 serial_json = {
                     "factory_title": factoryTitle,
                     "child_searials": child_searial
@@ -56,4 +51,34 @@ class NewcarSpider(scrapy.Spider):
             # yield newCar
 
     def parse_car(self, response):
-        print(response.text)
+        tables = response.xpath('//div[@id="trm_data"]').css('.b').xpath('./table').css('.b')
+        url_path = urlparse(response.url).path
+        detail = NewCarSerialDetail()
+        detail['car_serial_id'] = url_path
+        car_lists = []
+        for table in tables:
+            generator_config = table.xpath('./thead/tr/th/text()').extract()[0]
+            lists = table.xpath('./tbody/tr').css('.s_list')
+            year_list = []
+            for list in lists:
+                year_name = list.xpath('./td').css('.ftdleft').xpath('./a/text()').extract()[0]
+                guide_price = list.xpath('./td/a').css('.price1').xpath('./text()').extract()[0]
+                s_price = list.xpath('./td/span/a').css('.acred').xpath('./text()').extract()
+                if len(s_price) > 0:
+                    s_price = str(s_price[0]).strip()
+                else:
+                    s_price = '暂无'
+                print("year_name:{}, guide_price:{}, 4s_price:{}".format(year_name, guide_price, s_price))
+                year_json = {
+                    "year_name": year_name,
+                    "guide_price": guide_price,
+                    "price_4s": s_price
+                }
+                year_list.append(year_json)
+            car_json = {
+                "generator_config": generator_config,
+                "year_list": year_list
+            }
+            car_lists.append(car_json)
+        detail['car_lists'] = car_lists
+        yield detail

@@ -52,16 +52,16 @@ class Crawler(object, metaclass=ProxyMetaClass):
     #         yield result.replace(' ', '')
 
 
-    # def crawl_ip3366(self):
-    #     for page in range(1, 4):
-    #         start_url = 'http://www.ip3366.net/free/?stype=1&page={}'.format(page)
-    #         html = getPage(start_url)
-    #         ip_address = re.compile('<tr>\s*<td>(.*?)</td>\s*<td>(.*?)</td>')
-    #         # \s * 匹配空格，起到换行作用
-    #         re_ip_address = ip_address.findall(html)
-    #         for address, port in re_ip_address:
-    #             result = address+':'+ port
-    #             yield result.replace(' ', '')
+    def crawl_ip3366(self):
+        for page in range(1, 4):
+            start_url = 'http://www.ip3366.net/free/?stype=1&page={}'.format(page)
+            html = getPage(start_url)
+            ip_address = re.compile('<tr>\s*<td>(.*?)</td>\s*<td>(.*?)</td>')
+            # \s * 匹配空格，起到换行作用
+            re_ip_address = ip_address.findall(html)
+            for address, port in re_ip_address:
+                result = address+':'+ port
+                yield result.replace(' ', '')
 
     def crawl_kxdaili(self):
           start_url = 'https://www.kuaidaili.com/free/'

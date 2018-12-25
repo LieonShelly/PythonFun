@@ -128,9 +128,11 @@ class ProxyMiddleWare(object):
          proxy = self.get_random_proxy()
          # proxy = '110.167.30.50:8060'
          spider.logger.info('Using proxy: %s' % proxy)
+         spider.logger.info('Proxy Request: %s' % request.url)
          if proxy:
              uri = "http://{proxy}".format(proxy=proxy)
              request.meta['proxy'] = uri
+
 
     @classmethod
     def from_crawler(cls, crawler):

@@ -1,14 +1,13 @@
-from mongoengine import *
-from mongoengine import EmbeddedDocument
-from mongoengine import StringField
-from mongoengine import Document
+from flask_mongoengine import *
+from app import db
 
 
-class CarBrand(Document):
-    brand_id = StringField()
-    name = StringField()
-    letter = StringField()
-    logo = StringField()
+
+class CarBrand(db.Document):
+    brand_id = db.StringField()
+    name = db.StringField()
+    letter = db.StringField()
+    logo = db.StringField()
 
     meta = {"collection": 'CarBrand'}
 

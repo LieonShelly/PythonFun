@@ -1,29 +1,30 @@
 from flask import Flask
-from config import config
-from flask_pymongo import PyMongo
+from config import config, CeleryConfig
 from flask_jwt_extended import JWTManager
-from gevent import monkey
 from flask_uploads import (UploadSet, configure_uploads, IMAGES,
                               UploadNotAllowed, patch_request_class)
-from mongoengine import *
+from flask_mongoengine  import MongoEngine
+from celery import Celery
+from pymongo import MongoClient
+# from gevent import monkey
 
-
-# gevent阻塞处理
-# monkey.patch_all()
-mongod = PyMongo()
+mongod = MongoClient()
 jwt = JWTManager()
 photos = UploadSet('photos', IMAGES)
+db = MongoEngine()
+celery = Celery()
+celery.config_from_object(CeleryConfig)
+from .task import *
+
 
 def create_app(config_name='default'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-    # mongod.init_app(app)
+    db.init_app(app)
     jwt.init_app(app)
-
     configure_uploads(app, photos)
     patch_request_class(app)
-
-    connect('wanchebao')
+    # monkey.patch_all()
 
     from .user import user  as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix="/user")
@@ -40,4 +41,6 @@ def create_app(config_name='default'):
     from .car import car_api as car_blueprint
     app.register_blueprint(car_blueprint, url_prefix='/car')
 
+    from .task import task_api as task_blueprint
+    app.register_blueprint(task_blueprint, url_prefix='/task')
     return app
